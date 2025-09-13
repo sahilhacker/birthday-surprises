@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Birthday Surprise</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #ffdde1, #ee9ca7);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 20px;
+            transition: all 0.3s ease;
+        }
+
+        #noBtn {
+            position: absolute;
+        }
+
+        #birthdayMessage {
+            display: none;
+            font-size: 1.5rem;
+            margin-top: 20px;
+        }
+
+        #proposal {
+            display: none;
+            margin-top: 30px;
+        }
+
+        .heart {
+            color: red;
+            font-size: 2rem;
+            animation: beat 1s infinite;
+        }
+
+        @keyframes beat {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.3);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>🎉 A Special Surprise 🎉</h1>
+<button id="startBtn">Click for a surprise 🎁</button>
+
+<div id="birthdayMessage">
+    <h2>🎂 Happy Birthday, My Love! ❤️</h2>
+    <p>You are the sunshine that lights up my world. May your day be as beautiful and special as you are.</p>
+</div>
+
+<div id="proposal">
+    <h2>Will you marry me? 💍</h2>
+    <button id="yesBtn">Yes 💖</button>
+    <button id="noBtn">No 🚫</button>
+</div>
+
+<script>
+    const startBtn = document.getElementById('startBtn');
+    const birthdayMessage = document.getElementById('birthdayMessage');
+    const proposal = document.getElementById('proposal');
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+
+    startBtn.addEventListener('click', () => {
+        startBtn.style.display = 'none';
+        birthdayMessage.style.display = 'block';
+
+        setTimeout(() => {
+            proposal.style.display = 'block';
+        }, 2000);
+    });
+
+    noBtn.addEventListener('mouseover', () => {
+        const x = Math.floor(Math.random() * (window.innerWidth - noBtn.offsetWidth));
+        const y = Math.floor(Math.random() * (window.innerHeight - noBtn.offsetHeight));
+        noBtn.style.left = `${x}px`;
+        noBtn.style.top = `${y}px`;
+    });
+
+    yesBtn.addEventListener('click', () => {
+        proposal.innerHTML = `
+            <h2>💖 You made me the happiest person in the world! 💖</h2>
+            <div class="heart">❤️❤️❤️</div>
+        `;
+    });
+</script>
+
+</body>
+
+</html>
