@@ -2,116 +2,115 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Special Birthday Surprise</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Happy Birthday Sanmi 🎂</title>
     <style>
         body {
-            text-align: center;
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(to right, #ffdde1, #ee9ca7);
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: #333;
+            background: url('https://raw.githubusercontent.com/sahilhacker/birthday-surprises/master/Picsart_25-09-17_16-56-12-574.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            text-align: center;
+            padding: 50px;
         }
 
-        button {
+        .container {
+            background: rgba(0, 0, 0, 0.6);
+            max-width: 600px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            color: #ffeb3b;
+            font-size: 2.5em;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin: 20px 0;
+        }
+
+        .button {
+            display: inline-block;
+            margin: 20px;
             padding: 15px 30px;
-            font-size: 1.2rem;
+            font-size: 1.2em;
+            color: white;
+            background-color: #e91e63;
             border: none;
             border-radius: 10px;
             cursor: pointer;
-            margin: 20px;
             transition: all 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #d81b60;
+        }
+
+        #questionSection, #finalMessage {
+            display: none;
         }
 
         #noBtn {
             position: absolute;
         }
-
-        #birthdayMessage {
-            display: none;
-            font-size: 1.5rem;
-            margin-top: 20px;
-        }
-
-        #proposal {
-            display: none;
-            margin-top: 30px;
-        }
-
-        .heart {
-            color: red;
-            font-size: 2rem;
-            animation: beat 1s infinite;
-        }
-
-        @keyframes beat {
-            0% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.3);
-            }
-
-            100% {
-                transform: scale(1);
-            }
-        }
     </style>
 </head>
 
 <body>
+    <div class="container" id="messageSection">
+        <h1>Happy Birthday Sanmi 🎉</h1>
+        <p>
+            We met 3 months ago unexpectedly in a game, and from that moment, something magical began.<br/>
+            Our vibes matched perfectly, as if the universe itself wanted us to connect.<br/>
+            Even though we fight sometimes, hurt each other, and face challenges,<br/>
+            our bond grows stronger every day.<br/>
+            You live far away, yet every single day we talk, laugh, and share our dreams over the phone.<br/>
+            I always imagine the day we will finally meet in person, look into each other's eyes, and never let go.<br/><br/>
+            Sanmi, you are not just someone special to me; you are my reason to smile, my hope, and my forever thought.<br/>
+            On your birthday, I wish nothing but happiness, love, and a lifetime where we remain together. 💖
+        </p>
+        <button class="button" onclick="showQuestion()">Click Here</button>
+    </div>
 
-<h1>🎉 A Special Surprise 🎉</h1>
-<button id="startBtn">Click for a surprise 🎁</button>
+    <div class="container" id="questionSection">
+        <h1>Do you want us to be together throughout life?</h1>
+        <button class="button" onclick="showFinalMessage()">Yes 💕</button>
+        <button class="button" id="noBtn" onmouseover="moveNoButton()">No 😢</button>
+    </div>
 
-<div id="birthdayMessage">
-    <h2>🎂 Happy Birthday, My Love! ❤️</h2>
-    <p>You are the sunshine that lights up my world. May your day be as beautiful and special as you are.</p>
-</div>
+    <div class="container" id="finalMessage">
+        <h1>💖 I'm so happy you said YES! 💖</h1>
+        <p>
+            Be with me for my lifetime, Sanmi.<br/>
+            I will be with you forever, bachii. 😘
+        </p>
+    </div>
 
-<div id="proposal">
-    <h2>Will you marry me? 💍</h2>
-    <button id="yesBtn">Yes 💖</button>
-    <button id="noBtn">No 🚫</button>
-</div>
+    <script>
+        function showQuestion() {
+            document.getElementById('messageSection').style.display = 'none';
+            document.getElementById('questionSection').style.display = 'block';
+        }
 
-<script>
-    const startBtn = document.getElementById('startBtn');
-    const birthdayMessage = document.getElementById('birthdayMessage');
-    const proposal = document.getElementById('proposal');
-    const noBtn = document.getElementById('noBtn');
-    const yesBtn = document.getElementById('yesBtn');
+        function moveNoButton() {
+            const btn = document.getElementById('noBtn');
+            const x = Math.floor(Math.random() * (window.innerWidth - btn.offsetWidth));
+            const y = Math.floor(Math.random() * (window.innerHeight - btn.offsetHeight));
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+        }
 
-    startBtn.addEventListener('click', () => {
-        startBtn.style.display = 'none';
-        birthdayMessage.style.display = 'block';
-
-        setTimeout(() => {
-            proposal.style.display = 'block';
-        }, 2000);
-    });
-
-    noBtn.addEventListener('mouseover', () => {
-        const x = Math.floor(Math.random() * (window.innerWidth - noBtn.offsetWidth));
-        const y = Math.floor(Math.random() * (window.innerHeight - noBtn.offsetHeight));
-        noBtn.style.left = `${x}px`;
-        noBtn.style.top = `${y}px`;
-    });
-
-    yesBtn.addEventListener('click', () => {
-        proposal.innerHTML = `
-            <h2>💖 You made me the happiest person in the world! 💖</h2>
-            <div class="heart">❤️❤️❤️</div>
-        `;
-    });
-</script>
-
+        function showFinalMessage() {
+            document.getElementById('questionSection').style.display = 'none';
+            document.getElementById('finalMessage').style.display = 'block';
+        }
+    </script>
 </body>
 
 </html>
