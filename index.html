@@ -45,9 +45,22 @@ button:hover {
 }
 
 #ageCounter {
-    font-size: 24px;
-    color: #ffeb3b;
-    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.age-block {
+    background-color: rgba(255, 64, 129, 0.8);
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 18px;
+    box-shadow: 0 0 8px rgba(255, 64, 129, 0.8);
+    color: #fff;
+    min-width: 90px;
+    text-align: center;
 }
 
 #balloons {
@@ -71,7 +84,7 @@ button:hover {
 }
 
 #cake {
-    width: 300px;
+    width: 350px;
     margin: 20px auto;
     display: none;
 }
@@ -155,7 +168,7 @@ body.lights-on {
 const clickSound = document.getElementById('clickSound');
 function playSound() { clickSound.currentTime = 0; clickSound.play(); }
 
-// Typing animation function
+// Typing animation
 function typeText(element, text, delay=300) {
     element.innerHTML = '';
     element.style.opacity = 1;
@@ -192,6 +205,19 @@ function getRealTimeAge(birthdate) {
     const minutes = now.getMinutes();
     const seconds = now.getSeconds();
     return `${years} years, ${months} months, ${weeks} weeks, ${remainingDays} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+}
+
+// Display age in brick blocks
+function displayAgeInBlocks(ageString) {
+    const ageContainer = document.getElementById('ageCounter');
+    ageContainer.innerHTML = '';
+    const parts = ageString.split(',');
+    parts.forEach(part => {
+        const block = document.createElement('div');
+        block.className = 'age-block';
+        block.textContent = part.trim();
+        ageContainer.appendChild(block);
+    });
 }
 
 // Popup buttons
@@ -238,13 +264,14 @@ bannerBtn.addEventListener('click', () => {
     // Real-time age counter and floating hearts
     setTimeout(() => {
         function updateAge(){
-            ageCounter.textContent = getRealTimeAge(new Date(2008,8,21));
+            const ageString = getRealTimeAge(new Date(2008,8,21));
+            displayAgeInBlocks(ageString);
         }
         updateAge();
         setInterval(updateAge, 1000); // update every second
 
-        // Start floating hollow hearts
-        setInterval(createHeart, 500); // every 0.5s
+        // Floating hollow hearts
+        setInterval(createHeart, 500);
     }, 1000);
 });
 
@@ -284,7 +311,7 @@ const finalMsg = document.getElementById('finalMsg');
 finalBtn.addEventListener('click', () => {
     playSound();
     finalBtn.classList.add('hidden');
-    specialMsg.classList.add('hidden'); // Remove previous special message
+    specialMsg.classList.add('hidden'); // remove previous message
     finalMsg.classList.remove('hidden');
     typeText(finalMsg, "Thank you bachii, I will always be with you forever 💖✨", 200);
 });
@@ -303,11 +330,11 @@ function createBalloons(num) {
     }
 }
 
-// Create floating hollow heart
+// Floating hollow hearts
 function createHeart() {
     const heart = document.createElement('div');
     heart.className = 'hollow-heart';
-    heart.innerHTML = '♡'; // hollow heart
+    heart.innerHTML = '♡';
     heart.style.left = Math.random() * (window.innerWidth - 30) + 'px';
     heart.style.fontSize = (16 + Math.random() * 20) + 'px';
     document.body.appendChild(heart);
