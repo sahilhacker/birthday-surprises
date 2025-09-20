@@ -1,116 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Happy Birthday Sanmi 🎂</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background: url('https://raw.githubusercontent.com/sahilhacker/birthday-surprises/master/Picsart_25-09-17_16-56-12-574.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: #fff;
-            text-align: center;
-            padding: 50px;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Surprise</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        font-family: 'Arial', sans-serif;
+        color: #fff;
+        overflow-x: hidden;
+        background-image: url('https://raw.githubusercontent.com/sahilhacker/birthday-surprises/master/Picsart_25-09-17_16-56-12-574.jpg');
+        background-size: cover;
+        background-position: center;
+    }
 
-        .container {
-            background: rgba(0, 0, 0, 0.6);
-            max-width: 600px;
-            margin: auto;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-        }
+    .hidden { display: none; }
 
-        h1 {
-            color: #ffeb3b;
-            font-size: 2.5em;
-        }
+    button {
+        padding: 10px 20px;
+        margin: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        background-color: #ff4081;
+        color: white;
+        transition: 0.3s;
+    }
 
-        p {
-            font-size: 1.2em;
-            line-height: 1.6;
-            margin: 20px 0;
-        }
+    button:hover { background-color: #f50057; }
 
-        .button {
-            display: inline-block;
-            margin: 20px;
-            padding: 15px 30px;
-            font-size: 1.2em;
-            color: white;
-            background-color: #e91e63;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+    #banner {
+        position: relative;
+        font-size: 40px;
+        color: yellow;
+        margin: 20px 0;
+        animation: bannerDrop 1s forwards;
+    }
 
-        .button:hover {
-            background-color: #d81b60;
-        }
+    @keyframes bannerDrop {
+        0% { top: -100px; opacity: 0; }
+        100% { top: 0; opacity: 1; }
+    }
 
-        #questionSection, #finalMessage {
-            display: none;
-        }
+    #balloons {
+        position: relative;
+        height: 300px;
+        margin-top: 20px;
+    }
 
-        #noBtn {
-            position: absolute;
-        }
-    </style>
+    .balloon {
+        width: 50px;
+        height: 70px;
+        background-color: red;
+        border-radius: 50% 50% 50% 50%;
+        position: absolute;
+        bottom: -100px;
+        animation: floatUp 5s linear infinite;
+    }
+
+    @keyframes floatUp {
+        0% { bottom: -100px; }
+        100% { bottom: 300px; }
+    }
+
+    #cake {
+        width: 200px;
+        margin: 20px auto;
+        display: none;
+    }
+
+    #finalBtn {
+        padding: 15px 25px;
+        font-size: 20px;
+        background-color: green;
+    }
+
+    /* Lights effect */
+    body.lights-on {
+        filter: brightness(1.2);
+    }
+
+    h2 {
+        margin-top: 30px;
+        font-size: 28px;
+        text-shadow: 2px 2px 4px #000;
+    }
+
+    p.special-msg {
+        margin-top: 20px;
+        font-size: 20px;
+        line-height: 1.5;
+        text-shadow: 1px 1px 2px #000;
+    }
+
+</style>
 </head>
-
 <body>
-    <div class="container" id="messageSection">
-        <h1>Happy Birthday Sanmi 🎉</h1>
-        <p>
-            We met 3 months ago unexpectedly in a game, and from that moment, something magical began.<br/>
-            Our vibes matched perfectly, as if the universe itself wanted us to connect.<br/>
-            Even though we fight sometimes, hurt each other, and face challenges,<br/>
-            our bond grows stronger every day.<br/>
-            You live far away, yet every single day we talk, laugh, and share our dreams over the phone.<br/>
-            I always imagine the day we will finally meet in person, look into each other's eyes, and never let go.<br/><br/>
-            Sanmi, you are not just someone special to me; you are my reason to smile, my hope, and my forever thought.<br/>
-            On your birthday, I wish nothing but happiness, love, and a lifetime where we remain together. 💖
-        </p>
-        <button class="button" onclick="showQuestion()">Click Here</button>
-    </div>
 
-    <div class="container" id="questionSection">
-        <h1>Do you want us to be together throughout life?</h1>
-        <button class="button" onclick="showFinalMessage()">Yes 💕</button>
-        <button class="button" id="noBtn" onmouseover="moveNoButton()">No 😢</button>
-    </div>
+<!-- Initial popup -->
+<div id="popup">
+    <h2>Madamji, do you want to see what I made for you? ❣️</h2>
+    <button id="yesBtn">Yes</button>
+    <button id="noBtn">No</button>
+</div>
 
-    <div class="container" id="finalMessage">
-        <h1>💖 I'm so happy you said YES! 💖</h1>
-        <p>
-            Be with me for my lifetime, Sanmi.<br/>
-            I will be with you forever, bachii. 😘
-        </p>
-    </div>
+<!-- Buttons sequence -->
+<div id="mainContent" class="hidden">
+    <button id="lightsBtn">Turn Lights On</button>
+    <button id="bannerBtn" class="hidden">Show Banners</button>
+    <button id="balloonsBtn" class="hidden">Show Balloons</button>
+    <button id="cakeBtn" class="hidden">Cut Cake</button>
+    <button id="finalBtn" class="hidden">Will you be with me forever? ❣️</button>
+</div>
 
-    <script>
-        function showQuestion() {
-            document.getElementById('messageSection').style.display = 'none';
-            document.getElementById('questionSection').style.display = 'block';
-        }
+<!-- Birthday Elements -->
+<div id="banner" class="hidden">🎉 Happy Birthday! 🎉</div>
+<div id="balloons"></div>
+<img id="cake" src="https://i.ibb.co/8KhkqXL/cake.png" alt="Birthday Cake">
 
-        function moveNoButton() {
-            const btn = document.getElementById('noBtn');
-            const x = Math.floor(Math.random() * (window.innerWidth - btn.offsetWidth));
-            const y = Math.floor(Math.random() * (window.innerHeight - btn.offsetHeight));
-            btn.style.left = x + 'px';
-            btn.style.top = y + 'px';
-        }
+<script>
+// Popup buttons
+const popup = document.getElementById('popup');
+const yesBtn = document.getElementById('yesBtn');
+const noBtn = document.getElementById('noBtn');
+const mainContent = document.getElementById('mainContent');
 
-        function showFinalMessage() {
-            document.getElementById('questionSection').style.display = 'none';
-            document.getElementById('finalMessage').style.display = 'block';
-        }
-    </script>
+yesBtn.addEventListener('click', () => {
+    popup.classList.add('hidden');
+    // Show welcome message
+    const msg = document.createElement('h2');
+    msg.textContent = "Yay! Let's make your birthday special! 🎉";
+    msg.id = "welcomeMsg";
+    document.body.insertBefore(msg, mainContent);
+    mainContent.classList.remove('hidden');
+});
+
+noBtn.addEventListener('click', () => {
+    popup.innerHTML = "<h2>Okay, maybe next time! 💖</h2>";
+});
+
+// Lights button
+const lightsBtn = document.getElementById('lightsBtn');
+lightsBtn.addEventListener('click', () => {
+    document.body.classList.add('lights-on');
+    lightsBtn.classList.add('hidden');
+    document.getElementById('bannerBtn').classList.remove('hidden');
+});
+
+// Banner button
+const bannerBtn = document.getElementById('bannerBtn');
+bannerBtn.addEventListener('click', () => {
+    document.getElementById('banner').classList.remove('hidden');
+    bannerBtn.classList.add('hidden');
+    document.getElementById('balloonsBtn').classList.remove('hidden');
+});
+
+// Balloons button
+const balloonsBtn = document.getElementById('balloonsBtn');
+balloonsBtn.addEventListener('click', () => {
+    balloonsBtn.classList.add('hidden');
+    createBalloons(8); // Create 8 balloons
+    document.getElementById('cakeBtn').classList.remove('hidden');
+});
+
+// Cake button
+const cakeBtn = document.getElementById('cakeBtn');
+cakeBtn.addEventListener('click', () => {
+    cakeBtn.classList.add('hidden');
+    const cake = document.getElementById('cake');
+    cake.style.display = 'block';
+
+    // Special message after cake
+    const specialMsg = document.createElement('p');
+    specialMsg.className = 'special-msg';
+    specialMsg.innerHTML = `
+    We met 3 months ago unexpectedly in a game, and from that moment, something soft and special began.<br>
+    Our vibes matched like two puzzles fitting perfectly. Though we argue sometimes and unintentionally hurt each other,<br>
+    our bond grows stronger with every call and every silly fight we make up from.<br>
+    You live far away, but every day we share our dreams and laugh together — I imagine the day we finally meet and never let go.<br>
+    Sanmi, you are my reason to smile. On your birthday I wish you all the happiness, and a lifetime where we remain together. 💖
+    `;
+    document.body.appendChild(specialMsg);
+
+    document.getElementById('finalBtn').classList.remove('hidden');
+});
+
+// Final button
+const finalBtn = document.getElementById('finalBtn');
+finalBtn.addEventListener('click', () => {
+    finalBtn.classList.add('hidden');
+    const finalMsg = document.createElement('h2');
+    finalMsg.textContent = "I’m so happy you are with me! 💖";
+    document.body.appendChild(finalMsg);
+});
+
+// Balloon creation
+function createBalloons(num) {
+    const balloonsContainer = document.getElementById('balloons');
+    const colors = ['red','blue','green','pink','orange','purple','yellow'];
+    for (let i = 0; i < num; i++) {
+        let balloon = document.createElement('div');
+        balloon.className = 'balloon';
+        balloon.style.left = (Math.random() * (window.innerWidth - 50)) + 'px';
+        balloon.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+        balloon.style.animationDuration = (4 + Math.random()*3) + 's';
+        balloonsContainer.appendChild(balloon);
+    }
+}
+</script>
+
 </body>
-
 </html>
