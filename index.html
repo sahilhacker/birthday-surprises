@@ -5,101 +5,124 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Birthday Surprise</title>
 <style>
-    body {
-        margin: 0;
-        padding: 0;
-        text-align: center;
-        font-family: 'Arial', sans-serif;
-        color: #fff;
-        overflow-x: hidden;
-        background-image: url('https://raw.githubusercontent.com/sahilhacker/birthday-surprises/master/Picsart_25-09-17_16-56-12-574.jpg');
-        background-size: cover;
-        background-position: center;
-    }
+body {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    color: #fff;
+    overflow-x: hidden;
+    background-color: black; /* initial black background */
+    background-size: cover;
+    background-position: center;
+    transition: background 1s ease;
+}
 
-    .hidden { display: none; }
+.hidden { display: none; }
 
-    button {
-        padding: 10px 20px;
-        margin: 10px;
-        font-size: 16px;
-        cursor: pointer;
-        border: none;
-        border-radius: 5px;
-        background-color: #ff4081;
-        color: white;
-        transition: 0.3s;
-    }
+/* Button styles */
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff4081;
+    color: white;
+    transition: 0.3s;
+}
+button:hover {
+    background: linear-gradient(45deg, #ff4081, #ff80ab, #ff4081);
+    box-shadow: 0 0 15px #ff4081, 0 0 30px #ff80ab;
+}
 
-    button:hover { background-color: #f50057; }
+#banner {
+    position: relative;
+    font-size: 40px;
+    color: yellow;
+    margin: 20px 0;
+}
 
-    #banner {
-        position: relative;
-        font-size: 40px;
-        color: yellow;
-        margin: 20px 0;
-        animation: bannerDrop 1s forwards;
-    }
+#ageCounter {
+    font-size: 24px;
+    color: #ffeb3b;
+    margin-top: 10px;
+}
 
-    @keyframes bannerDrop {
-        0% { top: -100px; opacity: 0; }
-        100% { top: 0; opacity: 1; }
-    }
+#balloons {
+    position: relative;
+    height: 300px;
+    margin-top: 20px;
+}
 
-    #balloons {
-        position: relative;
-        height: 300px;
-        margin-top: 20px;
-    }
+.balloon {
+    width: 50px;
+    height: 70px;
+    border-radius: 50%;
+    position: absolute;
+    bottom: -100px;
+    animation: floatUp 5s linear infinite;
+}
 
-    .balloon {
-        width: 50px;
-        height: 70px;
-        background-color: red;
-        border-radius: 50% 50% 50% 50%;
-        position: absolute;
-        bottom: -100px;
-        animation: floatUp 5s linear infinite;
-    }
+@keyframes floatUp {
+    0% { bottom: -100px; }
+    100% { bottom: 300px; }
+}
 
-    @keyframes floatUp {
-        0% { bottom: -100px; }
-        100% { bottom: 300px; }
-    }
+#cake {
+    width: 300px;
+    margin: 20px auto;
+    display: none;
+}
 
-    #cake {
-        width: 200px;
-        margin: 20px auto;
-        display: none;
-    }
+#specialMsg, #finalMsg {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,0.7);
+    padding: 20px;
+    border-radius: 15px;
+    max-width: 80%;
+    text-align: center;
+    font-size: 20px;
+    line-height: 1.5;
+    color: #fff;
+    opacity: 0;
+}
 
-    #finalBtn {
-        padding: 15px 25px;
-        font-size: 20px;
-        background-color: green;
-    }
+#finalBtn, #specialBtn {
+    padding: 15px 25px;
+    font-size: 18px;
+}
 
-    /* Lights effect */
-    body.lights-on {
-        filter: brightness(1.2);
-    }
+/* Lights effect */
+body.lights-on {
+    filter: brightness(1.2);
+}
 
-    h2 {
-        margin-top: 30px;
-        font-size: 28px;
-        text-shadow: 2px 2px 4px #000;
-    }
+/* Hollow heart style */
+.hollow-heart {
+    position: absolute;
+    font-size: 24px;
+    color: red;
+    opacity: 0.8;
+    text-shadow: 0 0 8px red;
+    animation: floatHeart 5s linear forwards;
+}
 
-    p.special-msg {
-        margin-top: 20px;
-        font-size: 20px;
-        line-height: 1.5;
-        text-shadow: 1px 1px 2px #000;
-    }
-
+@keyframes floatHeart {
+    0% { transform: translateY(0) scale(1); opacity: 0.8; }
+    50% { transform: translateY(-150px) scale(1.2); opacity: 1; }
+    100% { transform: translateY(-400px) scale(1); opacity: 0; }
+}
 </style>
 </head>
 <body>
+
+<!-- Audio for button click -->
+<audio id="clickSound" src="https://www.soundjay.com/button/sounds/button-16.mp3"></audio>
 
 <!-- Initial popup -->
 <div id="popup">
@@ -114,15 +137,63 @@
     <button id="bannerBtn" class="hidden">Show Banners</button>
     <button id="balloonsBtn" class="hidden">Show Balloons</button>
     <button id="cakeBtn" class="hidden">Cut Cake</button>
+    <button id="specialBtn" class="hidden">I have a message for you</button>
     <button id="finalBtn" class="hidden">Will you be with me forever? ❣️</button>
 </div>
 
 <!-- Birthday Elements -->
-<div id="banner" class="hidden">🎉 Happy Birthday! 🎉</div>
+<div id="banner" class="hidden"></div>
+<div id="ageCounter" class="hidden"></div>
 <div id="balloons"></div>
-<img id="cake" src="https://i.ibb.co/8KhkqXL/cake.png" alt="Birthday Cake">
+<img id="cake" src="https://static.vecteezy.com/system/resources/thumbnails/010/310/768/large/birthday-glowing-candle-flame-in-anniversary-party-happy-celebrate-event-free-video.jpg" alt="Birthday Cake">
+
+<p id="specialMsg" class="hidden"></p>
+<p id="finalMsg" class="hidden"></p>
 
 <script>
+// Audio
+const clickSound = document.getElementById('clickSound');
+function playSound() { clickSound.currentTime = 0; clickSound.play(); }
+
+// Typing animation function
+function typeText(element, text, delay=300) {
+    element.innerHTML = '';
+    element.style.opacity = 1;
+    const words = text.split(' ');
+    let i = 0;
+    function typeNext() {
+        if(i < words.length){
+            element.innerHTML += words[i] + ' ';
+            i++;
+            setTimeout(typeNext, delay);
+        }
+    }
+    typeNext();
+}
+
+// Real-time age calculation
+function getRealTimeAge(birthdate) {
+    const now = new Date();
+    let years = now.getFullYear() - birthdate.getFullYear();
+    let months = now.getMonth() - birthdate.getMonth();
+    let days = now.getDate() - birthdate.getDate();
+    if(days < 0){
+        months -=1;
+        const lastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+        days += lastMonth.getDate();
+    }
+    if(months < 0){
+        years -=1;
+        months +=12;
+    }
+    const weeks = Math.floor(days/7);
+    const remainingDays = days % 7;
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const seconds = now.getSeconds();
+    return `${years} years, ${months} months, ${weeks} weeks, ${remainingDays} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+}
+
 // Popup buttons
 const popup = document.getElementById('popup');
 const yesBtn = document.getElementById('yesBtn');
@@ -130,72 +201,92 @@ const noBtn = document.getElementById('noBtn');
 const mainContent = document.getElementById('mainContent');
 
 yesBtn.addEventListener('click', () => {
+    playSound();
     popup.classList.add('hidden');
-    // Show welcome message
     const msg = document.createElement('h2');
-    msg.textContent = "Yay! Let's make your birthday special! 🎉";
-    msg.id = "welcomeMsg";
-    document.body.insertBefore(msg, mainContent);
+    mainContent.parentNode.insertBefore(msg, mainContent);
     mainContent.classList.remove('hidden');
+    typeText(msg, "Yay! Let's make your birthday special! 🎉", 200);
 });
 
 noBtn.addEventListener('click', () => {
+    playSound();
     popup.innerHTML = "<h2>Okay, maybe next time! 💖</h2>";
 });
 
 // Lights button
 const lightsBtn = document.getElementById('lightsBtn');
 lightsBtn.addEventListener('click', () => {
-    document.body.classList.add('lights-on');
+    playSound();
+    document.body.style.backgroundImage = "url('https://raw.githubusercontent.com/sahilhacker/birthday-surprises/master/Picsart_25-09-17_16-56-12-574.jpg')";
     lightsBtn.classList.add('hidden');
     document.getElementById('bannerBtn').classList.remove('hidden');
 });
 
 // Banner button
 const bannerBtn = document.getElementById('bannerBtn');
+const banner = document.getElementById('banner');
+const ageCounter = document.getElementById('ageCounter');
 bannerBtn.addEventListener('click', () => {
-    document.getElementById('banner').classList.remove('hidden');
+    playSound();
+    banner.classList.remove('hidden');
+    ageCounter.classList.remove('hidden');
     bannerBtn.classList.add('hidden');
     document.getElementById('balloonsBtn').classList.remove('hidden');
+    typeText(banner, "🎉 Happy Birthday! 🎉", 200);
+
+    // Real-time age counter and floating hearts
+    setTimeout(() => {
+        function updateAge(){
+            ageCounter.textContent = getRealTimeAge(new Date(2008,8,21));
+        }
+        updateAge();
+        setInterval(updateAge, 1000); // update every second
+
+        // Start floating hollow hearts
+        setInterval(createHeart, 500); // every 0.5s
+    }, 1000);
 });
 
 // Balloons button
 const balloonsBtn = document.getElementById('balloonsBtn');
 balloonsBtn.addEventListener('click', () => {
+    playSound();
     balloonsBtn.classList.add('hidden');
-    createBalloons(8); // Create 8 balloons
+    createBalloons(8);
     document.getElementById('cakeBtn').classList.remove('hidden');
 });
 
 // Cake button
 const cakeBtn = document.getElementById('cakeBtn');
+const cake = document.getElementById('cake');
 cakeBtn.addEventListener('click', () => {
+    playSound();
     cakeBtn.classList.add('hidden');
-    const cake = document.getElementById('cake');
     cake.style.display = 'block';
+    document.getElementById('specialBtn').classList.remove('hidden');
+});
 
-    // Special message after cake
-    const specialMsg = document.createElement('p');
-    specialMsg.className = 'special-msg';
-    specialMsg.innerHTML = `
-    We met 3 months ago unexpectedly in a game, and from that moment, something soft and special began.<br>
-    Our vibes matched like two puzzles fitting perfectly. Though we argue sometimes and unintentionally hurt each other,<br>
-    our bond grows stronger with every call and every silly fight we make up from.<br>
-    You live far away, but every day we share our dreams and laugh together — I imagine the day we finally meet and never let go.<br>
-    Sanmi, you are my reason to smile. On your birthday I wish you all the happiness, and a lifetime where we remain together. 💖
-    `;
-    document.body.appendChild(specialMsg);
-
+// Special message button
+const specialBtn = document.getElementById('specialBtn');
+const specialMsg = document.getElementById('specialMsg');
+specialBtn.addEventListener('click', () => {
+    playSound();
+    specialBtn.classList.add('hidden');
+    specialMsg.classList.remove('hidden');
+    typeText(specialMsg, "We met 3 months ago unexpectedly in a game, and from that moment, something soft and special began. Our vibes matched like two puzzles fitting perfectly. Though we argue sometimes and unintentionally hurt each other, our bond grows stronger with every call and every silly fight we make up from. You live far away, but every day we share our dreams and laugh together — I imagine the day we finally meet and never let go. Sanmi, you are my reason to smile. On your birthday I wish you all the happiness, and a lifetime where we remain together. 💖", 150);
     document.getElementById('finalBtn').classList.remove('hidden');
 });
 
 // Final button
 const finalBtn = document.getElementById('finalBtn');
+const finalMsg = document.getElementById('finalMsg');
 finalBtn.addEventListener('click', () => {
+    playSound();
     finalBtn.classList.add('hidden');
-    const finalMsg = document.createElement('h2');
-    finalMsg.textContent = "I’m so happy you are with me! 💖";
-    document.body.appendChild(finalMsg);
+    specialMsg.classList.add('hidden'); // Remove previous special message
+    finalMsg.classList.remove('hidden');
+    typeText(finalMsg, "Thank you bachii, I will always be with you forever 💖✨", 200);
 });
 
 // Balloon creation
@@ -211,7 +302,17 @@ function createBalloons(num) {
         balloonsContainer.appendChild(balloon);
     }
 }
-</script>
 
+// Create floating hollow heart
+function createHeart() {
+    const heart = document.createElement('div');
+    heart.className = 'hollow-heart';
+    heart.innerHTML = '♡'; // hollow heart
+    heart.style.left = Math.random() * (window.innerWidth - 30) + 'px';
+    heart.style.fontSize = (16 + Math.random() * 20) + 'px';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 5000);
+}
+</script>
 </body>
 </html>
